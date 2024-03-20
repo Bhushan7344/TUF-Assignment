@@ -12,8 +12,16 @@ const CodeSnippetForm = () => {
     const [message, setMessage] = useState('');
     axios.defaults.baseURL = 'https://tuf-assignment-aqmr.onrender.com';
     const handleSubmit = async (e) => {
+
         e.preventDefault();
-        setLoading(true); // Set loading to true to display spinner
+        setLoading(true);
+            // Check if any required field is empty
+        if (!username || !codeLanguage || !stdin || !sourceCode) {
+            setMessage('All fields are required');
+            setLoading(false); // Set loading back to false
+            return;
+        }
+        
         try {
             await axios.post('/submit', {
                 username,
