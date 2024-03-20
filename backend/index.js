@@ -34,15 +34,9 @@ pool.connect((err) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-const redis = require('redis');
+const redis = require('ioredis');
 
-const client = redis.createClient({
-    password: process.env.REDIS_PASSWORD,
-    socket: {
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT
-    }
-});
+const client = redis.createClient();
 
 
 app.post('/submit', async (req, res) => {
