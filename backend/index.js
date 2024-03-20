@@ -37,9 +37,9 @@ app.use(cors());
 const redis = require('ioredis');
 
 const client = redis.createClient({
-    host: 'redis-14733.c322.us-east-1-2.ec2.cloud.redislabs.com',
-    port: 14733,
-    password: 'ITAXSYfZgEiVkVlkUHSD3RaIFNIIsRkY'
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD
 });
 
 client.on('error', (error) => {

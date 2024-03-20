@@ -15,7 +15,7 @@ const CodeSnippetForm = () => {
         e.preventDefault();
         setLoading(true); // Set loading to true to display spinner
         try {
-            await axios.post('http://localhost:5000/submit', {
+            await axios.post('https://tuf-assignment-aqmr.onrender.com/submit', {
                 username,
                 code_language: codeLanguage,
                 stdin,

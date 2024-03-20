@@ -14,7 +14,7 @@ const CodeSnippetList = () => {
 
     const fetchSnippets = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/snippets');
+            const response = await axios.get('https://tuf-assignment-aqmr.onrender.com/snippets');
             // Extract date and time from timestamp
             const formattedSnippets = response.data.map(snippet => {
                 const timestamp = new Date(snippet.timestamp);
