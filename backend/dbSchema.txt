@@ -1,0 +1,9 @@
+CREATE TABLE user_details (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    code_language VARCHAR(50) NOT NULL,
+    stdin TEXT,
+    source_code TEXT,
+    stdout TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
