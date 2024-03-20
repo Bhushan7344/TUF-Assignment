@@ -34,9 +34,9 @@ pool.connect((err) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-import { createClient } from 'ioredis';
+const redis = require('ioredis');
 
-const client = createClient({
+const client = redis.createClient({
     password: 'ITAXSYfZgEiVkVlkUHSD3RaIFNIIsRkY',
     socket: {
         host: 'redis-14733.c322.us-east-1-2.ec2.cloud.redislabs.com',
