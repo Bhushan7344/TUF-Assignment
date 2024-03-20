@@ -34,8 +34,15 @@ pool.connect((err) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-const Redis = require('ioredis');
-const redis = new Redis();
+const redis = require('ioredis');
+
+const client = redis.createClient({
+    password: process.env.REDIS_PASSWORD,
+    socket: {
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
+    }
+});
 
 
 app.post('/submit', async (req, res) => {
@@ -58,7 +65,7 @@ app.post('/submit', async (req, res) => {
         res.status(200).send('Code snippet submitted successfully');
         // Update Redis cache after inserting new data
         const snippets = await fetchDataFromDatabase();
-        await redis.set('snippets', JSON.stringify(snippets));
+        await client.set('snippets', JSON.stringify(snippets));
     } catch (error) {
         console.error('Error executing code:', error);
         res.status(500).send('Error submitting code snippet');
@@ -131,12 +138,12 @@ const fetchDataFromDatabase = async () => {
 
 const fetchSnippetsFromRedisOrDatabase = async () => {
     try {
-        const cachedSnippets = await redis.get('snippets');
+        const cachedSnippets = await client.get('snippets');
         if (cachedSnippets) {
             return JSON.parse(cachedSnippets);
         } else {
             const snippets = await fetchDataFromDatabase();
-            await redis.set('snippets', JSON.stringify(snippets));
+            await client.set('snippets', JSON.stringify(snippets));
             return snippets;
         }
     } catch (error) {
