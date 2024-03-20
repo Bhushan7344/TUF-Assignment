@@ -3,19 +3,11 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const axios = require('axios');
 const cors = require('cors');
-const path = require('path');
 const Buffer = require('buffer').Buffer;
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// Serve index.html for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 
 const { Pool } = require('pg');
@@ -42,7 +34,9 @@ pool.connect((err) => {
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 const redis = require('ioredis');
 
 const client = redis.createClient({

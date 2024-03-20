@@ -29,7 +29,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background: #c7eceb;
-  
+  justify-content: center;
 }
 
 h1 {

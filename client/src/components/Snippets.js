@@ -8,13 +8,15 @@ const CodeSnippetList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [snippetsPerPage] = useState(5);
 
+    axios.defaults.baseURL = 'https://tuf-assignment-aqmr.onrender.com';
+
     useEffect(() => {
         fetchSnippets();
     }, []);
 
     const fetchSnippets = async () => {
         try {
-            const response = await axios.get('https://tuf-assignment-aqmr.onrender.com/snippets');
+            const response = await axios.get('/snippets');
             // Extract date and time from timestamp
             const formattedSnippets = response.data.map(snippet => {
                 const timestamp = new Date(snippet.timestamp);

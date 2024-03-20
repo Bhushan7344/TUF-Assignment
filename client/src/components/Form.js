@@ -10,12 +10,12 @@ const CodeSnippetForm = () => {
     const [sourceCode, setSourceCode] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-
+    axios.defaults.baseURL = 'https://tuf-assignment-aqmr.onrender.com';
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); // Set loading to true to display spinner
         try {
-            await axios.post('https://tuf-assignment-aqmr.onrender.com/submit', {
+            await axios.post('/submit', {
                 username,
                 code_language: codeLanguage,
                 stdin,
