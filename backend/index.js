@@ -9,6 +9,14 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Serve index.html for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+
 const { Pool } = require('pg');
 const connectionString = process.env.CONNECTION_STRING;
 
