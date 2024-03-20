@@ -37,13 +37,28 @@ app.use(cors());
 const redis = require('ioredis');
 
 const client = redis.createClient({
-    password: 'ITAXSYfZgEiVkVlkUHSD3RaIFNIIsRkY',
-    socket: {
-        host: 'redis-14733.c322.us-east-1-2.ec2.cloud.redislabs.com',
-        port: 14733
-    }
+    host: 'redis-14733.c322.us-east-1-2.ec2.cloud.redislabs.com',
+    port: 14733,
+    password: 'ITAXSYfZgEiVkVlkUHSD3RaIFNIIsRkY'
 });
 
+client.on('error', (error) => {
+    console.error('Redis connection error:', error);
+    // Optionally, you can try to reconnect here
+    // You can implement retry logic here
+    // For example, retry connecting after a delay
+    setTimeout(createRedisClient, 3000); // Retry connection after 3 seconds
+});
+
+client.on('connect', () => {
+    console.log('Connected to Redis on port:', client.options.port);
+});
+
+client.on('end', () => {
+    console.log('Redis connection closed');
+    // Optionally, you can handle the connection being closed here
+    // You can implement logic to attempt reconnection
+});
 
 app.post('/submit', async (req, res) => {
     const { username, code_language, stdin, source_code } = req.body;
